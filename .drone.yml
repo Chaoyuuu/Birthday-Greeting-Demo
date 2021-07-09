@@ -6,13 +6,12 @@ steps:
   - name: Maven Package
     commands:
       - mvn package --quiet
-    when:
-      event:
-        - push
   - name: Build Docker Image
     commands:
       - docker build . -t birthday-greeting-demo-image
     when:
+      branch:
+        - master
       event:
         - push
   - name: Deploy
@@ -20,6 +19,8 @@ steps:
       - docker rm -f birthday-greeting-demo
       - docker run -d --name birthday-greeting-demo -p 27000:8080 birthday-greeting-demo-image
     when:
+      branch:
+        - master
       event:
         - push
 
