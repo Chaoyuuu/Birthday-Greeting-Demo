@@ -1,20 +1,23 @@
 package tw.chaoyu.date;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
  */
 public class DateProvider {
-    private static Date now;
+    private static LocalDate now;
 
-    public static void setNow(Calendar now) {
-        DateProvider.now = now.getTime();
+    public static void setNow(LocalDate now) {
+        DateProvider.now = now;
     }
 
-    public static Date now() {
-        return now == null ? new Date() : now;
+    public static void setNow(int year, int month, int day) {
+        DateProvider.now = LocalDate.of(year, month, day);
     }
+
+    public static LocalDate now() {
+        return now == null ? LocalDate.now() : now;
+    }
+
 }

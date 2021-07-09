@@ -1,15 +1,34 @@
 package tw.chaoyu.primitive;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.Past;
+import java.time.LocalDate;
+
+import static tw.chaoyu.utils.ValidationUtils.validate;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
  */
 @Getter
-@AllArgsConstructor
 public class Birthday {
-    private int year;
-    private int month;
-    private int day;
+    @Past
+    private final LocalDate date;
+
+    public Birthday(int year, int month, int date) {
+        this.date = LocalDate.of(year, month, date);
+        validate(this);
+    }
+
+    public int getYear() {
+        return date.getYear();
+    }
+
+    public int getMonth() {
+        return date.getMonthValue();
+    }
+
+    public int getDay() {
+        return date.getDayOfMonth();
+    }
 }

@@ -7,12 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import tw.chaoyu.date.DateProvider;
 import tw.chaoyu.primitive.Birthday;
+import tw.chaoyu.primitive.Mail;
 import tw.chaoyu.primitive.Member;
+import tw.chaoyu.primitive.Name;
 import tw.chaoyu.repository.MemberRepository;
 
-import java.util.GregorianCalendar;
-
-import static java.util.Calendar.AUGUST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,9 +29,9 @@ class GreetingControllerTest {
 
     @Test
     void GivenTodayIs0808RobertWhoseBirthdayIs19750808_WhenGreetBirthdayMembers_ShouldGreetRobert() throws Exception {
-        today(2021, AUGUST,8);
-        Birthday birthday = new Birthday(1975, AUGUST, 8);
-        Member member = new Member("Robert", "Yen", Male, birthday, "robert.yen@linecorp.com");
+        today(2021, 8, 8);
+        Birthday birthday = new Birthday(1975, 8, 8);
+        Member member = new Member(new Name("Robert", "Yen"), Male, birthday, new Mail("robert.yen@linecorp.com"));
         memberRepository.save(member);
 
         mockMvc.perform(get("/api/greeting/birthday"))
@@ -41,6 +40,6 @@ class GreetingControllerTest {
     }
 
     private void today(int year, int month, int day) {
-        DateProvider.setNow(new GregorianCalendar(year, month, day));
+        DateProvider.setNow(year, month, day);
     }
 }
