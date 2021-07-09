@@ -16,4 +16,6 @@ public interface MemberRepository {
     }
 
     List<Member> getBirthdayMembers(int month, int date);
+
+    void deleteAll();
 }

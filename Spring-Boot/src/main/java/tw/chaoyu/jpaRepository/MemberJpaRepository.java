@@ -27,4 +27,9 @@ public class MemberJpaRepository implements MemberRepository {
                 .map(MemberData::toEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAll() {
+        memberDAO.deleteAll();
+    }
 }
