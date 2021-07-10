@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
+import static tw.chaoyu.date.DateProvider.now;
 import static tw.chaoyu.utils.ValidationUtils.validate;
 
 /**
@@ -30,5 +31,10 @@ public class Birthday {
 
     public int getDay() {
         return date.getDayOfMonth();
+    }
+
+    public int getAge() {
+        var today = now();
+        return today.getYear() - date.getYear();
     }
 }
