@@ -4,9 +4,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 import tw.chaoyu.message.Message;
 import tw.chaoyu.useCase.GreetBirthdayMembersUseCase;
+import tw.chaoyu.view.MessageView;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
@@ -21,12 +23,10 @@ public class GreetBirthdayMembersPresenter implements GreetBirthdayMembersUseCas
         this.messages = messages;
     }
 
-    public String present() {
-        return messages.stream().map(this::typeSet).collect(Collectors.joining("\n"));
-    }
-
-    private String typeSet(Message message) {
-        return message.getSubject() + "\n" + message.getTopContent();
+    public List<MessageView> present() {
+        return messages.stream()
+                .map(MessageView::toViewModel)
+                .collect(toList());
     }
 }
 
