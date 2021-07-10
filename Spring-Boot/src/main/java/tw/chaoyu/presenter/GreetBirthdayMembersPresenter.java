@@ -14,22 +14,15 @@ import java.util.stream.Collectors;
 @RequestScope
 @Component
 public class GreetBirthdayMembersPresenter implements GreetBirthdayMembersUseCase.Presenter {
-    private List<Member> members;
+    private List<String> products;
 
     @Override
-    public void showMembers(List<Member> members) {
-        this.members = members;
+    public void showMessages(List<String> messages) {
+        this.products = messages;
     }
 
     public String present() {
-        return members.stream()
-                .map(m -> getGreetingMsg(m.getName().getFirstName()))
-                .collect(Collectors.joining("\n"));
+        return String.join("\n", products);
     }
-
-    private String getGreetingMsg(String name) {
-        return "Subject: Happy birthday!\nHappy birthday, dear " + name + "!";
-    }
-
 }
 
