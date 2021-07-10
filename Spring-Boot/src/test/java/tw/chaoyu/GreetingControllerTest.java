@@ -36,9 +36,9 @@ class GreetingControllerTest {
     }
 
     @DisplayName("Given today is 8/8 and five members: two of them (Robert and Sherry) born on 8/8, " +
-            "When greet the birthday members, Should greet Robert and Sherry.")
+            "When greet the birthday members, Should greet Robert and Sherry with different messages.")
     @Test
-    void GivenTodayIs0808AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetRobertAndSherry() throws Exception {
+    void GivenTodayIs0808AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetRobertAndSherryWithDifferentMessages() throws Exception {
         today(2021, 8, 8);
 
         saveMember("Robert", "Yen", Male, 1975, 8, 8, "robert.yen@linecorp.com");
@@ -49,8 +49,11 @@ class GreetingControllerTest {
 
         mockMvc.perform(get("/api/greeting/birthday"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Subject: Happy birthday!\n" + "Happy birthday, dear Robert!\n"
-                        + "Subject: Happy birthday!\n" + "Happy birthday, dear Sherry!"));
+                .andExpect(content()
+                        .string("Subject: Happy birthday!\nHappy birthday, dear Robert!\n" +
+                                "We offer special discount 20% off for the following items:\nWhite Wine, iPhone X\n" +
+                                "Subject: Happy birthday!\nHappy birthday, dear Sherry!\n" +
+                                "We offer special discount 50% off for the following items:\nCosmetic, LV Handbags"));
     }
 
     private void today(int year, int month, int day) {
