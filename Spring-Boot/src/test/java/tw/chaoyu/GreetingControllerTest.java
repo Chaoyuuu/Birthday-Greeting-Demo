@@ -36,7 +36,7 @@ class GreetingControllerTest {
     }
 
     @DisplayName("Given today is 8/8 and five members: two of them (Robert and Sherry) born on 8/8, " +
-            "When greet the birthday members, Should greet Robert and Sherry with simple messages and full name.")
+            "When greet the birthday members, Should greet Robert and Sherry with simple messages with full name.")
     @Test
     void GivenTodayIs0808AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetRobertAndSherryWithSimpleMessagesWithFullName() throws Exception {
         today(2021, 8, 8);

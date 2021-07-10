@@ -2,11 +2,9 @@ package tw.chaoyu;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tw.chaoyu.discount.DiscountPolicy;
 import tw.chaoyu.editor.Messaging;
 
-import static tw.chaoyu.editor.DiscountOfferMessaging.offerDiscount;
-import static tw.chaoyu.editor.ElderPictureMessaging.greetElderWithPicture;
+import static tw.chaoyu.editor.Messaging.dummy;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
@@ -14,7 +12,7 @@ import static tw.chaoyu.editor.ElderPictureMessaging.greetElderWithPicture;
 @Configuration
 public class MessageEditorConfiguration {
     @Bean
-    public Messaging defaultMessaging(DiscountPolicy discountPolicy) {
-        return greetElderWithPicture(offerDiscount(discountPolicy));
+    public Messaging defaultMessaging() {
+        return dummy();
     }
 }
