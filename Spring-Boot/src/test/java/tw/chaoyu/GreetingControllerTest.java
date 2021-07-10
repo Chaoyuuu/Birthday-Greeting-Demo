@@ -56,6 +56,26 @@ class GreetingControllerTest {
                                 "We offer special discount 50% off for the following items:\nCosmetic, LV Handbags"));
     }
 
+    @DisplayName("Given today is 12/22 and five members: Peter born on 12/22, " +
+            "When greet the birthday members, Should greet Peter with elder picture and messages.")
+    @Test
+    void GivenTodayIs1222AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetPeterWithElderPictureAndMessage() throws Exception {
+        today(2021, 12, 22);
+
+        saveMember("Robert", "Yen", Male, 1975, 8, 8, "robert.yen@linecorp.com");
+        saveMember("Cid", "Change", Male, 1990, 10, 10, "cid.change@linecorp.com");
+        saveMember("Miki", "Lai", Female, 1993, 4, 5, "miki.lai@linecorp.com");
+        saveMember("Sherry", "Chen", Female, 1993, 8, 8, "sherry.lai@linecorp.com");
+        saveMember("Peter", "Wang", Male, 1950, 12, 22, "peter.wang@linecorp.com");
+
+        mockMvc.perform(get("/api/greeting/birthday"))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .string("Subject: Happy birthday!\nHappy birthday, dear Peter!\n" +
+                                "(A greeting picture here)\n" +
+                                "We offer special discount 20% off for the following items:\nWhite Wine, iPhone X"));
+    }
+
     private void today(int year, int month, int day) {
         DateProvider.setNow(year, month, day);
     }
