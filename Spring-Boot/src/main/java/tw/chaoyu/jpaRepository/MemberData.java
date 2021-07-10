@@ -9,14 +9,12 @@ import tw.chaoyu.primitive.Member;
 import tw.chaoyu.primitive.Member.Gender;
 import tw.chaoyu.primitive.Name;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
  */
+@Table(name = "Member")
 @Entity
 @Builder
 @NoArgsConstructor
