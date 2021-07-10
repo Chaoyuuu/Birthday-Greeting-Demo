@@ -21,7 +21,7 @@ public abstract class Messaging {
 
     protected void next(MessageBuilder builder, Member member) {
         if (nextMessaging != null) {
-            nextMessaging.write(builder, member);
+            nextMessaging.edit(builder, member);
         }
     }
 
