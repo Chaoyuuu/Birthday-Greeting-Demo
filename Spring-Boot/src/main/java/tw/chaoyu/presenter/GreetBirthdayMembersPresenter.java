@@ -3,7 +3,6 @@ package tw.chaoyu.presenter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 import tw.chaoyu.message.Message;
-import tw.chaoyu.message.Picture;
 import tw.chaoyu.useCase.GreetBirthdayMembersUseCase;
 
 import java.util.List;
@@ -27,9 +26,7 @@ public class GreetBirthdayMembersPresenter implements GreetBirthdayMembersUseCas
     }
 
     private String typeSet(Message message) {
-        return message.getSubject() + message.getTopContent() +
-                message.getPicture().orElseGet(Picture::dummy).getImage() +
-                message.getBottomContent();
+        return message.getSubject() + "\n" + message.getTopContent();
     }
 }
 

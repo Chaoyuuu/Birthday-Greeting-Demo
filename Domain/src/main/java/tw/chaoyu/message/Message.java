@@ -23,12 +23,12 @@ public class Message {
         private Picture picture;
 
         public MessageBuilder editSubject(String editedSubject) {
-            subject = "Subject: " + editedSubject + "\n";
+            subject = "Subject: " + editedSubject;
             return this;
         }
 
         public MessageBuilder editTopContent(String editedTopContent) {
-            topContent = editedTopContent + "\n";
+            topContent = editedTopContent;
             return this;
         }
 
