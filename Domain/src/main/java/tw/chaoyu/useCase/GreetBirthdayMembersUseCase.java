@@ -1,48 +1,49 @@
 package tw.chaoyu.useCase;
 
-
-import lombok.AllArgsConstructor;
+import tw.chaoyu.editor.Messaging;
+import tw.chaoyu.message.Message;
+import tw.chaoyu.message.Message.MessageBuilder;
 import tw.chaoyu.primitive.Member;
 import tw.chaoyu.repository.MemberRepository;
 
 import javax.inject.Named;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static tw.chaoyu.date.DateProvider.now;
-import static tw.chaoyu.primitive.Member.Gender.Male;
+import static tw.chaoyu.editor.BirthdayMessaging.greetWithBirthdayMessage;
 
 /**
  * @author chaoyulee chaoyu2330@gmail.com
  */
 @Named
-@AllArgsConstructor
 public class GreetBirthdayMembersUseCase {
     private final MemberRepository memberRepository;
+    private final Messaging messaging;
+
+    public GreetBirthdayMembersUseCase(MemberRepository memberRepository, Messaging messaging) {
+        this.memberRepository = memberRepository;
+        this.messaging = greetWithBirthdayMessage(messaging);
+    }
 
     public void execute(Presenter presenter) {
         List<Member> members = memberRepository.getBirthdayMembers(now());
         presenter.showMessages(greet(members));
     }
 
-    private List<String> greet(List<Member> members) {
+    private List<Message> greet(List<Member> members) {
         return members.stream()
-                .map(this::getGreetingMessage)
-                .collect(Collectors.toList());
+                .map(this::greet)
+                .collect(toList());
     }
 
-    private String getGreetingMessage(Member member) {
-        String subject = "Subject: Happy birthday!\n";
-        if (Male == member.getGender()) {
-            return subject + "Happy birthday, dear " + member.getName().getFirstName() + "!\n" +
-                    "We offer special discount 20% off for the following items:\nWhite Wine, iPhone X";
-        } else {
-            return subject + "Happy birthday, dear " + member.getName().getFirstName() + "!\n" +
-                    "We offer special discount 50% off for the following items:\nCosmetic, LV Handbags";
-        }
+    private Message greet(Member member) {
+        var messageBuilder = new MessageBuilder();
+        messaging.edit(messageBuilder, member);
+        return messageBuilder.build();
     }
 
     public interface Presenter {
-        void showMessages(List<String> messages);
+        void showMessages(List<Message> messages);
     }
 }

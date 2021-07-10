@@ -2,7 +2,7 @@ package tw.chaoyu.presenter;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
-import tw.chaoyu.primitive.Member;
+import tw.chaoyu.message.Message;
 import tw.chaoyu.useCase.GreetBirthdayMembersUseCase;
 
 import java.util.List;
@@ -14,15 +14,19 @@ import java.util.stream.Collectors;
 @RequestScope
 @Component
 public class GreetBirthdayMembersPresenter implements GreetBirthdayMembersUseCase.Presenter {
-    private List<String> products;
+    private List<Message> messages;
 
     @Override
-    public void showMessages(List<String> messages) {
-        this.products = messages;
+    public void showMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     public String present() {
-        return String.join("\n", products);
+        return messages.stream().map(this::typeSet).collect(Collectors.joining("\n"));
+    }
+
+    private String typeSet(Message message) {
+        return message.getSubject() + message.getTopContent() + message.getBottomContent();
     }
 }
 
