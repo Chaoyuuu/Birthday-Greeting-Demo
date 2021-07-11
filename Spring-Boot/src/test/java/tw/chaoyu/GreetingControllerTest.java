@@ -50,10 +50,10 @@ class GreetingControllerTest {
 
         mockMvc.perform(get("/api/greeting/birthday"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("[{\"title\":\"Subject: Happy birthday!\",\"content\":\"Happy birthday, dear Robert!\"},"
-                        + "{\"title\":\"Subject: Happy birthday!\",\"content\":\"Happy birthday, dear Sherry!\"}]"));
-    }
+                .andExpect(content().contentType(MediaType.APPLICATION_XML))
+                .andExpect(content().xml("<List><item><title>Subject: Happy birthday!</title><content>Happy birthday, dear Robert!</content></item>" +
+                        "<item><title>Subject: Happy birthday!</title><content>Happy birthday, dear Sherry!</content></item></List>"));
+          }
 
     private void today(int year, int month, int day) {
         DateProvider.setNow(year, month, day);
