@@ -18,7 +18,7 @@ public class BirthdayMessaging extends Messaging {
     @Override
     public void write(Message.MessageBuilder builder, Member member) {
         builder.editSubject("Happy birthday!")
-                .editTopContent("Happy birthday, dear " + member.getName().getLastName() + ", " + member.getName().getFirstName() + "!");
+                .editTopContent("Happy birthday, dear " + member.getName().getFirstName() + "!");
         next(builder, member);
     }
 }

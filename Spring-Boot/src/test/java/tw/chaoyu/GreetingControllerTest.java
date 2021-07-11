@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tw.chaoyu.date.DateProvider;
 import tw.chaoyu.primitive.Birthday;
@@ -36,9 +37,9 @@ class GreetingControllerTest {
     }
 
     @DisplayName("Given today is 8/8 and five members: two of them (Robert and Sherry) born on 8/8, " +
-            "When greet the birthday members, Should greet Robert and Sherry with simple messages with full name.")
+            "When greet the birthday members, Should greet Robert and Sherry with simple messages.")
     @Test
-    void GivenTodayIs0808AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetRobertAndSherryWithSimpleMessagesWithFullName() throws Exception {
+    void GivenTodayIs0808AndFiveMembers_WhenGreetBirthdayMembers_ShouldGreetRobertAndSherryWithSimpleMessages() throws Exception {
         today(2021, 8, 8);
 
         saveMember("Robert", "Yen", Male, 1975, 8, 8, "robert.yen@linecorp.com");
@@ -49,10 +50,10 @@ class GreetingControllerTest {
 
         mockMvc.perform(get("/api/greeting/birthday"))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .string("Subject: Happy birthday!\nHappy birthday, dear Yen, Robert!\n" +
-                                "Subject: Happy birthday!\nHappy birthday, dear Chen, Sherry!"));
-    }
+                .andExpect(content().contentType(MediaType.APPLICATION_XML))
+                .andExpect(content().xml("<List><item><title>Subject: Happy birthday!</title><content>Happy birthday, dear Robert!</content></item>" +
+                        "<item><title>Subject: Happy birthday!</title><content>Happy birthday, dear Sherry!</content></item></List>"));
+          }
 
     private void today(int year, int month, int day) {
         DateProvider.setNow(year, month, day);
